@@ -1,0 +1,13 @@
+{
+  "name": "@backtester/core",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {
+    "@backtester/tools": "^1.0.0",
+    "@backtester/services": "^1.0.0"
+  }
+}

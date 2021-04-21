@@ -1,0 +1,15 @@
+{
+  "packages": ["packages/*"],
+  "npmClient": "yarn",
+  "version": "1.0.0",
+  "command": {
+    "version": {
+      "ignoreChanges": ["*.md"],
+      "npmClient": "yarn",
+      "message": "chore(release): publish"
+    },
+    "publish": {
+      "npmClient": "yarn"
+    }
+  }
+}
