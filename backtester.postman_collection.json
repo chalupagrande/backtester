@@ -1,0 +1,385 @@
+{
+	"info": {
+		"_postman_id": "db4a3a21-31f8-401e-88cc-b3393dfdbec0",
+		"name": "backtester",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/alpaca",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"start\": \"2021-01-01T00:00:00Z\",\n    \"end\": \"2021-03-31T23:59:59Z\",\n    \"cash\": 1000,\n    \"inc\": \"DAY\",\n    \"portfolio\": [\"GME\", \"TSLA\"],\n    \"description\": \"My first study\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/alpaca",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"alpaca"
+					]
+				},
+				"description": "create alpaca backtester study"
+			},
+			"response": []
+		},
+		{
+			"name": "/all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/all",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"all"
+					]
+				},
+				"description": "Gets all studies and description."
+			},
+			"response": []
+		},
+		{
+			"name": "/study/:id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/study/_dceti1rgi",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"study",
+						"_dceti1rgi"
+					]
+				},
+				"description": "Gets the entire study object"
+			},
+			"response": []
+		},
+		{
+			"name": "/study/:id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/study/_370xc7g6w",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"study",
+						"_370xc7g6w"
+					]
+				},
+				"description": "Deletes study by :id"
+			},
+			"response": []
+		},
+		{
+			"name": "study/:id/data?start=0&end=5",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/study/_dceti1rgi/data?start=0&end=5",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"study",
+						"_dceti1rgi",
+						"data"
+					],
+					"query": [
+						{
+							"key": "start",
+							"value": "0"
+						},
+						{
+							"key": "end",
+							"value": "5"
+						}
+					]
+				},
+				"description": "Gets the data from the study\nIf `start` and `end` Query paramaters are passed. It will get the data for that window. Otherwise, data is returned only for the Studies Current Tick"
+			},
+			"response": []
+		},
+		{
+			"name": "study/:id/tick",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/study/_dceti1rgi/tick",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"study",
+						"_dceti1rgi",
+						"tick"
+					]
+				},
+				"description": "Tick the study"
+			},
+			"response": []
+		},
+		{
+			"name": "study/:id/tick",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/study/_ffw7mwd4m/tick",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"study",
+						"_ffw7mwd4m",
+						"tick"
+					]
+				},
+				"description": "Increment the tick of the study by 1"
+			},
+			"response": []
+		},
+		{
+			"name": "study/:id/tick",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"tick\": 10\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/study/_dceti1rgi/tick",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"study",
+						"_dceti1rgi",
+						"tick"
+					]
+				},
+				"description": "Set the tick to a specific \"tick\" value"
+			},
+			"response": []
+		},
+		{
+			"name": "study/:id/order (BUY)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"direction\": \"BUY\", \n    \"type\": \"LIMIT\",\n    \"symbol\": \"GME\",\n    \"shares\": 5,\n    \"price\": 22\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/study/_f3h0y7f3a/order",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"study",
+						"_f3h0y7f3a",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/study/:id/order (SELL)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"direction\": \"SELL\", \n    \"type\": \"MARKET\",\n    \"symbol\": \"GME\",\n    \"shares\": 5,\n    \"price\": 20\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/study/_dceti1rgi/order",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"study",
+						"_dceti1rgi",
+						"order"
+					]
+				},
+				"description": "Place an order"
+			},
+			"response": []
+		},
+		{
+			"name": "/study/:id/orders/:orderId",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/study/_f3h0y7f3a/order/_h5e4hlinw",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"study",
+						"_f3h0y7f3a",
+						"order",
+						"_h5e4hlinw"
+					]
+				},
+				"description": "Cancels the order by :orderId (if it is still in the queue)"
+			},
+			"response": []
+		},
+		{
+			"name": "/study/:id/orders",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/study/_f3h0y7f3a/orders",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"study",
+						"_f3h0y7f3a",
+						"orders"
+					]
+				},
+				"description": "Get open and filled orders already placed."
+			},
+			"response": []
+		},
+		{
+			"name": "/study/:id/process",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/study/_ffw7mwd4m/process",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"study",
+						"_ffw7mwd4m",
+						"process"
+					]
+				},
+				"description": "Process the order queue"
+			},
+			"response": []
+		},
+		{
+			"name": "/study/:id/holdings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/study/_dceti1rgi/holdings",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"study",
+						"_dceti1rgi",
+						"holdings"
+					]
+				},
+				"description": "Get current holdings"
+			},
+			"response": []
+		},
+		{
+			"name": "/study/:id/portfolio",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/study/_dceti1rgi/portfolio",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"study",
+						"_dceti1rgi",
+						"portfolio"
+					]
+				},
+				"description": "Get portfolio for study"
+			},
+			"response": []
+		},
+		{
+			"name": "/study/:id/service",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/study/_dceti1rgi/service",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"study",
+						"_dceti1rgi",
+						"service"
+					]
+				},
+				"description": "Gets the service for the Study"
+			},
+			"response": []
+		}
+	]
+}

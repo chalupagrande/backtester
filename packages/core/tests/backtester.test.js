@@ -1,3 +1,7 @@
+const path = require('path')
+require('dotenv').config({
+  path: path.resolve(__dirname, '../../../.env'),
+})
 const AlpacaService = require('@backtester/services/AlpacaService')
 const Backtester = require('../src/Backtester')
 const Service = require('../src/Service')
@@ -8,6 +12,12 @@ let BT = null
 let Alpaca = null
 let id = null
 let study = null
+
+const alpacaOptions = {
+  ...opts,
+  alpacaId: process.env.ALPACA_API_KEY_ID,
+  alpacaSecret: process.env.ALPACA_API_SECRET_KEY,
+}
 
 describe('Backtester', () => {
   beforeAll(() => {
@@ -20,7 +30,7 @@ describe('Backtester', () => {
 
 describe('Services', () => {
   beforeAll(() => {
-    Alpaca = new AlpacaService(opts)
+    Alpaca = new AlpacaService(alpacaOptions)
   })
 
   test('created instance', () => {
@@ -56,7 +66,11 @@ describe('Studies', () => {
     expect(Array.isArray(study.filledOrders)).toBe(true)
     expect(study.curTick).toBe(0)
     expect(study.service instanceof AlpacaService).toBe(true)
-    expect(study.holdings).toEqual({ GME: 0, TSLA: 0 })
+    expect(Object.keys(study.holdings)).toEqual(['GME', 'TSLA'])
+    expect(study.holdings['GME']).toEqual({
+      shares: 0,
+      value: 0,
+    })
     console.log('STUDY HOLDINGS', study.holdings)
   })
 
@@ -112,7 +126,8 @@ describe('Studies', () => {
         expect(study.filledOrders.length).toBe(1)
         expect(study.queue.length).toBe(0)
         expect(study.cash).toBe(909.4)
-        expect(study.holdings['GME']).toBe(5)
+        expect(study.holdings['GME'].shares).toBe(5)
+        expect(parseFloat(study.holdings['GME'].value.toFixed(2))).toBe(86.2)
       })
 
       test('can place SELL MARKET order', () => {
@@ -134,7 +149,7 @@ describe('Studies', () => {
         expect(study.filledOrders.length).toBe(2)
         expect(study.queue.length).toBe(0)
         expect(study.cash).toBe(1000)
-        expect(study.holdings['GME']).toBe(0)
+        expect(study.holdings['GME'].shares).toBe(0)
       })
     })
 
@@ -172,7 +187,7 @@ describe('Studies', () => {
         // both buy and sell limit orders have not posted
         expect(study.queue.length).toBe(2)
         expect(study.cash).toBe(1000)
-        expect(study.holdings['GME']).toBe(0)
+        expect(study.holdings['GME'].shares).toBe(0)
       })
 
       test('BUY LIMIT will post when price is met, and study is processed', () => {
@@ -185,7 +200,7 @@ describe('Studies', () => {
         expect(order.placedAt).toBe(2)
         expect(order.filledAt).toBe(3)
         expect(order.value).toBe(-92.5)
-        expect(study.holdings['GME']).toBe(5)
+        expect(study.holdings['GME'].shares).toBe(5)
         expect(study.cash).toBe(907.5)
         // the sell order remains
         expect(study.queue.length).toBe(1)
@@ -199,7 +214,7 @@ describe('Studies', () => {
         })
         expect(study.queue.length).toBe(1)
         expect(study.filledOrders.length).toBe(3)
-        expect(study.holdings['GME']).toBe(5)
+        expect(study.holdings['GME'].shares).toBe(5)
         study.tick()
         const filledOrders = study.process()
         const order = filledOrders[0]
@@ -210,7 +225,7 @@ describe('Studies', () => {
         expect(study.queue.length).toBe(0)
         expect(study.cash).toBe(1022.5)
         expect(order.status).toBe('COMPLETED')
-        expect(study.holdings['GME']).toBe(0)
+        expect(study.holdings['GME'].shares).toBe(0)
       })
     })
 
@@ -244,5 +259,21 @@ describe('Studies', () => {
 
   test('study should track filled orders', () => {
     expect(study.filledOrders.length).toBe(4)
+  })
+
+  test('holdings changes value with the ticks', () => {
+    expect(study.holdings['GME'].shares).toBe(0)
+    let order = study.order(orders.BUY_MARKET)
+    study.process()
+    expect(study.holdings['GME'].shares).toBe(5)
+    expect(study.holdings['GME'].value).toBe(199.59199999999998)
+    study.tick()
+    study.process()
+    study.tick()
+    study.process()
+    expect(study.holdings['GME'].value).toBe(197.54999999999998)
+    study.tick()
+    study.process()
+    expect(study.holdings['GME'].value).toBe(195.6)
   })
 })

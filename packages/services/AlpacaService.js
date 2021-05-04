@@ -1,17 +1,12 @@
-const path = require('path')
-require('dotenv').config({
-  path: path.resolve(__dirname, '../../.env'),
-})
-
 const Service = require('@backtester/core/src/Service')
 const Alpaca = require('@alpacahq/alpaca-trade-api')
 
 class AlpacaService extends Service {
-  constructor({ start, end, inc, portfolio }) {
+  constructor({ start, end, inc, portfolio, alpacaId, alpacaSecret }) {
     super(start, end, inc, portfolio)
     this.client = new Alpaca({
-      keyId: process.env.ALPACA_API_KEY_ID,
-      secretKey: process.env.ALPACA_API_SECRET_KEY,
+      keyId: alpacaId,
+      secretKey: alpacaSecret,
       paper: true,
       usePolygon: false,
     })

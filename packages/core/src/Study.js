@@ -3,27 +3,45 @@ class Study {
   /**
    *
    * @param {string} id - ID to use for the study
+   * @param {string} description - Description of the study.
    * @param {*} start - start date of the study
    * @param {*} end - end date of the study
    * @param {*} cash - amount of money to use
    */
-  constructor({ id, cash, service, portfolio }) {
+  constructor({ id, cash, service, portfolio, description }) {
     this.id = id
+    this.description = description
     this.originalCash = cash
     this.cash = cash
-    this.queue = []
-    this.filledOrders = []
-    this.canceledOrders = []
+    this.value = cash // market value
     this.curTick = 0
-    this.service = service
+    this.portfolio = portfolio // array of symbols
+    /**
+     * holdings looks like this:
+     * {
+     *   GME: {
+     *     shares: 10,
+     *     value: 350.50
+     *   },
+     * .....
+     * }
+     */
     this.holdings = portfolio.reduce((a, s) => {
-      a[s] = 0
+      a[s] = {
+        shares: 0,
+        value: 0,
+      }
       return a
     }, {})
+    this.queue = [] // array of orders that have not been processed
+    this.filledOrders = [] // orders that have been processed
+    this.canceledOrders = [] // array orders that have been canceled
+    this.service = service // the service object (includes data cache)
   }
 
   /**
    * Places an order in the queue
+   * @param {string} name -  Optional string describing order
    * @param {symbol} symbol - Stock symbol
    * @param {string} direction - BUY or SELL
    * @param {type} type - MARKET, LIMIT, etc...
@@ -39,6 +57,15 @@ class Study {
       priceToSet = parseFloat(((open + close) / 2).toFixed(2))
     }
 
+    // makes sure you cant have negative shares.
+    const numSharesHolding = this.holdings[symbol].shares
+    if (direction === 'SELL' && numSharesHolding < shares) {
+      throw new Error(
+        `Not enough shares to sell. You currently have ${numSharesHolding} and are trying to SELL ${shares}`
+      )
+    }
+
+    // create the order
     const order = new Order({
       symbol,
       name,
@@ -52,9 +79,15 @@ class Study {
     return order
   }
 
+  /**
+   *
+   * @param {string} id - order ID to cancel
+   * @returns
+   */
   cancelOrder(id) {
     let toCancel = this.queue.filter((order) => order.id === id)
     toCancel.forEach((order) => order.cancel())
+    return toCancel
   }
 
   /**
@@ -64,10 +97,15 @@ class Study {
    */
   process() {
     const filledOrders = []
+    const data = this.service.get(this.curTick)
+
+    /**
+     * FILTERS AND PROCESSES THE QUEUE
+     * */
     const newQueue = this.queue.filter((order) => {
-      const data = this.service.get(this.curTick)
-      // TODO: Add check to ensure you have shares to sell
-      const { lowPrice: l, highPrice: h } = data[order.symbol][0]
+      const { lowPrice: l, highPrice: h, closePrice: close } = data[
+        order.symbol
+      ][0]
 
       // removes canceled orders from the queue
       if (order.status === 'CANCELED') {
@@ -75,6 +113,7 @@ class Study {
         return false
       }
 
+      // conditions to place the order
       if (
         order.type === 'MARKET' ||
         (order.type === 'LIMIT' &&
@@ -88,9 +127,9 @@ class Study {
       ) {
         let delta = order.execute(this.curTick)
         const sharesDelta = (order.direction === 'BUY' ? 1 : -1) * order.shares
-        this.holdings[order.symbol] += sharesDelta
-
-        // adjust the porfolio value based off the value of that order
+        // adjust holdings
+        this.holdings[order.symbol].shares += sharesDelta
+        // adjust the portfolio cash based off the value of that order
         this.cash += delta
         // add it to the completed orders stack
         this.filledOrders.push(order)
@@ -100,6 +139,14 @@ class Study {
       }
       return true
     })
+
+    /**
+     * UPDATE HOLDINGS
+     */
+    for (let s in this.holdings) {
+      this.holdings[s].value = this.holdings[s].shares * data[s][0].closePrice
+    }
+
     this.queue = newQueue
     return filledOrders
   }
@@ -121,6 +168,11 @@ class Study {
     return this.curTick
   }
 
+  setTick(val) {
+    this.curTick = val
+    return this.curTick
+  }
+
   getHoldings() {
     return this.holdings
   }
@@ -131,6 +183,10 @@ class Study {
 
   getFilledOrders() {
     return this.filledOrders
+  }
+
+  getPortfolio() {
+    return this.portfolio
   }
 }
 

@@ -7,7 +7,8 @@
     "test": "jest"
   },
   "dependencies": {
+    "@backtester/services": "^1.0.0",
     "@backtester/tools": "^1.0.0",
-    "@backtester/services": "^1.0.0"
+    "path": "^0.12.7"
   }
 }
