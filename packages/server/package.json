@@ -4,8 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js --watch ../core/src --watch index.js"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js --watch ../core/src --watch index.js"
   },
   "dependencies": {
     "@backtester/tools": "^1.0.0",

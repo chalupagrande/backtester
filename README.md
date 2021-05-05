@@ -1,6 +1,7 @@
 # Backtester
 
 Backtester is a package that allows for quick algorithmic trading back-testing against real market data (currently delivered through Alapca).
+**\*Note:** Monorepo setup using [reference here](https://medium.com/trabe/monorepo-setup-with-lerna-and-yarn-workspaces-5d747d7c0e91)
 
 ## Packages
 
