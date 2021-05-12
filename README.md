@@ -13,6 +13,17 @@ Backtester is a package that allows for quick algorithmic trading back-testing a
 
 ## Getting Started
 
+## Method 1 - docker-compose
+
+Create a copy of `.env.example` in the root of the project and rename the copy to `.env`. Fill in your "API Key ID" and your "API Key Secret" that you can get from your Alpaca account. Then from the root of the project run these commands:
+
+```
+docker-compose build
+docker-compose up
+```
+
+## Method 2 - Manual Build
+
 ### Install the dependencies
 
 ```
