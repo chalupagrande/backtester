@@ -1,0 +1,9 @@
+version: '3.7'
+services:
+  server:
+    build:
+      context: server/
+    ports:
+      - 3000:3080
+networks:
+  default:
