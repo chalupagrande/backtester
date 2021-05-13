@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  backtester:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    env_file:
+      - .env
+    depends_on:
+      - "database"
+  database:
+    image: "postgres" # use latest official postgres version
+    restart: "always"
+    env_file:
+      - .env # configure postgres
+    volumes:
+      - database-data:/var/lib/postgresql/data/ # persist data even if container shuts down
+    ports:
+      - "8001:5432"
+
+volumes:
+  database-data: # named volumes can be managed easier using docker-compose

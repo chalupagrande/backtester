@@ -7,6 +7,7 @@ const app = express()
 const PORT = process.env.PORT || 3000
 const AlpacaService = require('@backtester/services/AlpacaService')
 const Backtester = require('@backtester/core/src/Backtester')
+const db = require('./db')
 const { Response } = require('./utils')
 
 const BT = new Backtester()
@@ -16,7 +17,7 @@ app.use(express.json())
 app.get('/', (req, res) => res.send('ok'))
 
 // creates an alpaca study instance
-app.post('/alpaca', (req, res) => {
+app.post('/alpaca', async (req, res) => {
   const { start, end, cash, inc, portfolio, description } = req.body
   const Alpaca = new AlpacaService({
     start,
@@ -26,8 +27,7 @@ app.post('/alpaca', (req, res) => {
     alpacaId: process.env.ALPACA_API_KEY_ID,
     alpacaSecret: process.env.ALPACA_API_SECRET_KEY,
   })
-  Alpaca.fetch()
-  Alpaca.testV2()
+  await Alpaca.fetch()
   const id = BT.prepare({ cash, service: Alpaca, portfolio, description })
   res.send(new Response(true, { study: id }, 'Service created'))
 })
