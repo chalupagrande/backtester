@@ -27,6 +27,7 @@ app.post('/alpaca', (req, res) => {
     alpacaSecret: process.env.ALPACA_API_SECRET_KEY,
   })
   Alpaca.fetch()
+  Alpaca.testV2()
   const id = BT.prepare({ cash, service: Alpaca, portfolio, description })
   res.send(new Response(true, { study: id }, 'Service created'))
 })

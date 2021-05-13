@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@alpacahq/alpaca-trade-api@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@alpacahq/alpaca-trade-api/-/alpaca-trade-api-2.0.0.tgz#dea78153a4c15f94d4aefa20018f0f0b28349566"
-  integrity sha512-X8UWtXNnMOl+cHZDHx7RSYZNvu+1+CTgzu1Ex8G7q1AXd9GKd8wJDrIsvX0Bm6PS2qrpRQJDaVv86eiFn7jLzA==
+"@alpacahq/alpaca-trade-api@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@alpacahq/alpaca-trade-api/-/alpaca-trade-api-2.1.0.tgz#b40a18f37e7c51a4fdf7fdc7474123eb61bdf1ee"
+  integrity sha512-bEMqWA6865jOzyxGbzN5PYAU2y4T7oAQMSO/F9cavFEf+2YAF8U0IJORgZpIVbLrndEbCddMyV8feu7qHyQRFA==
   dependencies:
     axios "^0.21.1"
     dotenv "^6.2.0"
