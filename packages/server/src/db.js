@@ -5,6 +5,8 @@ const password = process.env.POSTGRES_PASSWORD
 const dbName = process.env.POSTGRES_DB
 const dbPort = process.env.POSTGRES_PORT
 
+console.log('POSTGRESS STYFF', username, password, dbName, dbPort)
+
 const connectionString = `postgres://${username}:${password}@database:${dbPort}/${dbName}`
 const sequelize = new Sequelize(connectionString)
 
