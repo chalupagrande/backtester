@@ -5,20 +5,9 @@ const password = process.env.POSTGRES_PASSWORD
 const dbName = process.env.POSTGRES_DB
 const dbPort = process.env.POSTGRES_PORT
 
-console.log('POSTGRESS STYFF', username, password, dbName, dbPort)
-
+// use @database here because that is the name of the serive outlined in the docker.yml
 const connectionString = `postgres://${username}:${password}@database:${dbPort}/${dbName}`
 const sequelize = new Sequelize(connectionString)
-
-// const sequelize = new Sequelize(
-//   process.env.POSTGRES_DB,
-//   process.env.POSTGRES_USER,
-//   process.env.POSTGRES_PASSWORD,
-//   {
-//     host: 'database',
-//     dialect: 'postgres',
-//   }
-// )
 
 async function testConnection() {
   try {

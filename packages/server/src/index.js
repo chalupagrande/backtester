@@ -7,7 +7,7 @@ const app = express()
 const PORT = process.env.PORT || 3000
 const AlpacaService = require('@backtester/services/AlpacaService')
 const Backtester = require('@backtester/core/src/Backtester')
-const db = require('./db')
+// const db = require('./db')
 const { Response } = require('./utils')
 
 const BT = new Backtester()
@@ -59,8 +59,8 @@ app.delete('/study/:id', (req, res) => {
 // gets the data from a study with specific intervals.
 app.get('/study/:id/data', (req, res) => {
   const { id } = req.params
-  const { start, end } = req.query
-  const data = BT.getStudy(id).get(start, end)
+  const { start, end, prev } = req.query
+  const data = BT.getStudy(id).get(-prev || start, end)
   res.send(new Response(true, data))
 })
 

@@ -151,15 +151,23 @@ class Study {
     return filledOrders
   }
 
-  get(start, end) {
+  get(windowStart, windowEnd) {
     // if nothing is passed, just get the tick
-    if (
+    const start = parseInt(windowStart)
+    const end = parseInt(windowEnd)
+    if (start < 0) {
+      let tempLeft = this.curTick + start
+      let left = tempLeft < 0 ? 0 : tempLeft
+      let right = left - start
+      console.log('vals', tempLeft, left, right)
+      return this.service.get(left, right)
+    } else if (
       (start === undefined && end === undefined) ||
       (start !== undefined && end === undefined)
     ) {
       return this.service.get(this.curTick, this.curTick + 1)
     } else {
-      return this.service.get(start, end)
+      return this.service.get(windowStart, windowEnd)
     }
   }
 
