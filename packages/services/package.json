@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@alpacahq/alpaca-trade-api": "^2.0.0",
+    "@alpacahq/alpaca-trade-api": "^2.1.0",
     "@backtester/core": "^1.0.0",
     "@backtester/tools": "^1.0.0",
     "dotenv": "^8.2.0",

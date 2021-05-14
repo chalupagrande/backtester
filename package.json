@@ -7,9 +7,11 @@
     "type": "git",
     "url": "https://github.com/chalupagrande/backtester"
   },
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
   "author": "Jamie Skinner <jamie@etcetera.cr>",
   "license": "MIT",
   "scripts": {
