@@ -64,6 +64,13 @@ app.get('/study/:id/data', (req, res) => {
   res.send(new Response(true, data))
 })
 
+// reset all orders, filled orders, queue, and cash (does not refetch)
+app.get('/study/:id/reset', (req, res) => {
+  const { id } = req.params
+  BT.getStudy(id).reset()
+  res.send(new Response(true))
+})
+
 // get the current tick
 app.get('/study/:id/tick', (req, res) => {
   const { id } = req.params

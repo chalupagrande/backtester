@@ -24,7 +24,7 @@ const orders = {
     type: 'LIMIT',
     shares: 5,
     symbol: 'GME',
-    price: 18.5,
+    price: 17.2,
   },
   SELL_LIMIT: {
     direction: 'SELL',

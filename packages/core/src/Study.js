@@ -91,6 +91,26 @@ class Study {
   }
 
   /**
+   *
+   * @returns undefined
+   */
+  reset() {
+    this.cash = this.originalCash
+    this.value = this.originalCash // market value
+    this.curTick = 0
+    this.holdings = this.portfolio.reduce((a, s) => {
+      a[s] = {
+        shares: 0,
+        value: 0,
+      }
+      return a
+    }, {})
+    this.queue = [] // array of orders that have not been processed
+    this.filledOrders = [] // orders that have been processed
+    this.canceledOrders = [] // array orders that have been canceled
+  }
+
+  /**
    * This function expects a high and a low from the Service
    *
    * runs through queue and determines if any of the orders should be executed
@@ -159,13 +179,11 @@ class Study {
       let tempLeft = this.curTick + start
       let left = tempLeft < 0 ? 0 : tempLeft
       let right = left - start
-      console.log('vals', tempLeft, left, right)
       return this.service.get(left, right)
-    } else if (
-      (start === undefined && end === undefined) ||
-      (start !== undefined && end === undefined)
-    ) {
+    } else if (windowStart === undefined && windowEnd === undefined) {
       return this.service.get(this.curTick, this.curTick + 1)
+    } else if (windowStart !== undefined && windowEnd === undefined) {
+      return this.service.get(start, start + 1)
     } else {
       return this.service.get(windowStart, windowEnd)
     }
