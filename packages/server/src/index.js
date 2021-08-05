@@ -27,7 +27,7 @@ app.post('/alpaca', async (req, res) => {
     alpacaId: process.env.ALPACA_API_KEY_ID,
     alpacaSecret: process.env.ALPACA_API_SECRET_KEY,
   })
-  await Alpaca.fetch()
+  await Alpaca.fetchOHLC()
   const id = BT.prepare({ cash, service: Alpaca, portfolio, description })
   res.send(new Response(true, { study: id }, 'Service created'))
 })

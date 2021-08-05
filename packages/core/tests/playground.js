@@ -24,7 +24,7 @@ const id = BT.prepare({
 const study = BT.getStudy(id)
 
 async function run() {
-  await Alpaca.fetch()
+  await Alpaca.fetchOHLC()
   let r = study.get()
   console.log('R', r)
   r = study.get(1)

@@ -32,7 +32,7 @@ class Service {
   /**
    * Fetches the original data and populates the data cache
    */
-  fetch(symbols, startTime, endTime) {
+  fetchOHLC(symbols, startTime, endTime) {
     // fetches the actual data for the portfolio.
   }
 }

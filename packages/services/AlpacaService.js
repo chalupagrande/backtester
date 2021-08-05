@@ -12,7 +12,7 @@ class AlpacaService extends Service {
     })
   }
 
-  async fetch() {
+  async fetchOHLC() {
     const r = await this.client.getBars(
       this.inc.toLowerCase(),
       this.portfolio,
@@ -22,9 +22,13 @@ class AlpacaService extends Service {
         end: this.timeframe[1],
       }
     )
-    this.data = r
+    this.data = this.format(r)
     this.length = r[this.portfolio[0]].length
     return this.data
+  }
+
+  format(d) {
+    return d
   }
 }
 

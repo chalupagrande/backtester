@@ -52,7 +52,7 @@ describe('Services', () => {
   })
 
   test('can fetch, and set length', () => {
-    return Alpaca.fetch().then(() => {
+    return Alpaca.fetchOHLC().then(() => {
       expect(Object.keys(Alpaca.data)).toEqual([...opts.portfolio])
       expect(Alpaca.length).toBe(62)
     })
@@ -89,7 +89,6 @@ describe('Studies', () => {
       shares: 0,
       value: 0,
     })
-    console.log('STUDY HOLDINGS', study.holdings)
   })
 
   test('can track ticks', () => {

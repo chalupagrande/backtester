@@ -6,7 +6,7 @@ Backtester is a package that allows for quick algorithmic trading back-testing a
 ## Packages
 
 - **core** - All of the core backtesting logic
-- **server**\* - A API server to interact with the core modules, (in case you don't want to write javascript, or if you want to deploy this as a service)
+- **server**\* - An API server to interact with the core modules, (in case you don't want to write javascript, or if you want to deploy this as a service)
 - **services** - Services written for specific Broker dealers. (Currently only includes Alpaca)
 - **tools** - Tools and Utilities to support the other packages.
 
@@ -199,7 +199,7 @@ A service is a class used to get the stock data (bars) from a Broker Dealer and 
     // this will return an array with 1 item in it at the `this.curTick` index
     ```
 
-- **fetch()**
+- **fetchOHLC()**
 
   - description: This method should be redefined to accomodate for the specific broker dealers implementation of their historical BAR data. It should populate the `data` property of the service so it looks something like this: (Where GME is a stock symbol). It is also where you can format your Bar data to look something like the structure below. The rest of the core classes depend on a similar structure. For more information read the "assumptions" section of "Study".
 
@@ -222,6 +222,11 @@ A service is a class used to get the stock data (bars) from a Broker Dealer and 
     ```
 
     This function will likely take advantage of the `client`, `portfolio`, `inc`, and `timeframe` properties of a service to achieve this.
+
+- **fetchAskBid()**
+  - TODO: write a function that will fetch historical ask bid data.
+- **format()**
+  - this is to format the data so that the order module will know what properties. It is not required, but could be helpful to format into the structure above.
 
 ## **Study**
 
@@ -262,7 +267,7 @@ Study is the bread and butter of the backtester. It keeps track of all your open
 
 ### **_Methods_**
 
-- **constructor(&lt;Object&gt)**
+- **constructor(&lt;Object&gt;)**
 
   - description: creates a Study
   - arguments
@@ -270,7 +275,7 @@ Study is the bread and butter of the backtester. It keeps track of all your open
       - **id: &lt;ID&gt;** - ID that represents this study in the larger Backtester object. (this is used so multiple studies can run simultaneously and not collide)
       - **cash: &lt;Object&gt;** - the current amount of cash that the study has on hand, and is not tied up in assets/holdings. (BUYs subtract from cash, SELLs add to cash)
       - **service: &lt;Service&gt;** - the Service class from which to fetch the data.
-      - **portfolio: &lt;Array[ &lt;String&gt;]&gt;** - an array of strings representing the symbols for the stocks you would like to test
+      - **portfolio: &lt;Array [&lt;String&gt;] &gt;** - an array of strings representing the symbols for the stocks you would like to test
 
 - **get(start:&lt;Object&gt;(OPTIONAL), end:&lt;Object&gt;(OPTIONAL))**
 

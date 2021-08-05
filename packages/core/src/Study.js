@@ -123,9 +123,7 @@ class Study {
      * FILTERS AND PROCESSES THE QUEUE
      * */
     const newQueue = this.queue.filter((order) => {
-      const { lowPrice: l, highPrice: h, closePrice: close } = data[
-        order.symbol
-      ][0]
+      const { lowPrice: l, highPrice: h, closePrice: c } = data[order.symbol][0]
 
       // removes canceled orders from the queue
       if (order.status === 'CANCELED') {
