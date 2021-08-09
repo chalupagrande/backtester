@@ -7,6 +7,7 @@
     "@alpacahq/alpaca-trade-api": "^2.1.0",
     "@backtester/core": "^1.0.0",
     "@backtester/tools": "^1.0.0",
+    "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "path": "^0.12.7"
   }

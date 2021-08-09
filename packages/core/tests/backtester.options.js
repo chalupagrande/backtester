@@ -2,7 +2,7 @@ const opts = {
   start: '2021-01-01T00:00:00Z',
   end: '2021-03-31T23:59:59Z',
   cash: 1000,
-  inc: 'DAY',
+  inc: 'day',
   portfolio: ['GME', 'TSLA'],
 }
 

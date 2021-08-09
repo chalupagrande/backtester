@@ -93,6 +93,27 @@
 			"response": []
 		},
 		{
+			"name": "/study/:id/reset",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/study/_10y1wdyyc/reset",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"study",
+						"_10y1wdyyc",
+						"reset"
+					]
+				},
+				"description": "Resets filledOrders, curTick, queue, cash, value, holdings, canceledOrders"
+			},
+			"response": []
+		},
+		{
 			"name": "study/:id/data?start=0&end=5",
 			"request": {
 				"method": "GET",

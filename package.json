@@ -18,7 +18,8 @@
     "test": "yarn --cwd packages/core test",
     "testAll": "lerna run test",
     "dev": "yarn --cwd packages/server dev",
-    "start": "yarn --cwd packages/server start"
+    "start": "yarn --cwd packages/server start",
+    "playground": "yarn --cwd packages/playground start"
   },
   "dependencies": {
     "lerna": "^4.0.0"

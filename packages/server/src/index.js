@@ -7,16 +7,16 @@ const app = express()
 const PORT = process.env.PORT || 3000
 const AlpacaService = require('@backtester/services/AlpacaService')
 const Backtester = require('@backtester/core/src/Backtester')
-// const db = require('./db')
+const mdb = require('./database/mongodb')
+const Study = require('./database/mongodb/schema/Study')
 const { Response } = require('./utils')
 
 const BT = new Backtester()
 
 app.use(express.json())
-
-app.get('/', (req, res) => res.send('ok'))
-
+app.use('/', express.static(path.join(__dirname, '../../client/dist')))
 // creates an alpaca study instance
+
 app.post('/alpaca', async (req, res) => {
   const { start, end, cash, inc, portfolio, description } = req.body
   const Alpaca = new AlpacaService({
@@ -29,6 +29,12 @@ app.post('/alpaca', async (req, res) => {
   })
   await Alpaca.fetchOHLC()
   const id = BT.prepare({ cash, service: Alpaca, portfolio, description })
+
+  // create the study in the database
+  new Study(BT.studies[id]).save((err) => {
+    if (err) console.log('ERROR SAVING STUDY', err)
+  })
+
   res.send(new Response(true, { study: id }, 'Service created'))
 })
 

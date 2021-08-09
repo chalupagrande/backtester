@@ -5,6 +5,7 @@ Backtester is a package that allows for quick algorithmic trading back-testing a
 
 ## Packages
 
+- **client** - The react client to help you debug algorithms
 - **core** - All of the core backtesting logic
 - **server**\* - An API server to interact with the core modules, (in case you don't want to write javascript, or if you want to deploy this as a service)
 - **services** - Services written for specific Broker dealers. (Currently only includes Alpaca)

@@ -5,12 +5,14 @@
   "license": "MIT",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js --watch ../core/src --watch index.js"
+    "dev": "nodemon src/index.js --watch ../core/src --watch src/index.js"
   },
   "dependencies": {
+    "@backtester/client": "^1.0.0",
     "@backtester/tools": "^1.0.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "mongoose": "^5.13.5",
     "path": "^0.12.7",
     "pg": "^8.6.0",
     "sequelize": "^6.6.2"
